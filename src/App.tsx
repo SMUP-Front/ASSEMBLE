@@ -5,7 +5,11 @@ import Chat from "./Components/pages/Chat";
 import TimeTablePage from "./Components/pages/Schedules/TimeTable";
 
 function App() {
-  return <div id="AppWrapper"></div>;
+  return (
+    <div id="AppWrapper">
+      <TimeTablePage></TimeTablePage>
+    </div>
+  );
 }
 
 export default App;
