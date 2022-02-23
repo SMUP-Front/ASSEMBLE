@@ -2,9 +2,10 @@
 import React, { useEffect } from "react";
 import * as S from "./style";
 import { useState } from "react";
-import "../../../../scss/Timetable.scss"
+import "../../../../scss/Timetable.scss";
+import axios from "axios";
 import dayjs from "dayjs";
-import $ from "jquery"
+import $ from "jquery";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 export default function TimeTable() {
@@ -63,9 +64,9 @@ export default function TimeTable() {
     return todayLabel;
   }
   var today_of_the_week = getTodayLabel();
-  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let [dayof, setdayof] = useState(today_of_the_week); 
+  let [dayof, setdayof] = useState(today_of_the_week);
 
   let [period, setPeriod] = useState<string[]>([]);
 
@@ -80,11 +81,60 @@ export default function TimeTable() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  var now = dayjs();
+  // axios
+  //   .get("http://3.36.108.34:8080/api/v1/schedule/timetable", {
+  //     headers: {
+  //       Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDkxMDc2NTQsInVzZXJQayI6Ijk2NjIzMzE4IiwiaWF0IjoxNjQ1NTA3NjU0fQ.uw4PIakKnEDoemhU8uu1r1zlMcSVY7Qfv0Np9FjtD60`,
+  //     },
+  //   })
+  //   .then((res) => {
+  //     console.log(res.data);
+  //   });
+
+  let day1 = dayjs().format("YYYYMMDD");
+  let accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjY1MTU5MTAsInVzZXJQayI6Ijk2NjIzMzE4IiwiaWF0IjoxNjQ1NTU1OTEwfQ.7Q6iXmvGHYaPTpJHUMNpv5Dkm0xlsi40rUQz3TcLS-0";
+  console.log(day1);
+
+  axios({
+    method: "get",
+    url: "http://3.36.108.34:8080/api/v1/schedule/timetable",
+    params: {
+      startDate: `${day1}`,
+      endDate: `${day1}`,
+    },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  // axios({
+  //   method: "get",
+  //   url: "http://3.36.108.34:8080/api/v1/schedule/timetable",
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`,
+  //   },
+  // }).then((res) => {
+  //   console.log(res.data);
+  // });
+
+  // axios({
+  //   method: "get",
+  //   url: "http://3.36.108.34:8080/api/v1/meal",
+  //   params: {
+  //     date: `20220223`,
+  //   },
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`,
+  //   },
+  // }).then((res) => {
+  //   console.log(res.data);
+  // });
+
+  // var now = dayjs();
   // now.format();
 
   // let [showTime, setShowTime] = useState(now.format()); // 실시간 시간 보여주는 state
-  let nowMonth = now.format("MM-DD");
+  // let nowMonth = now.format("MM-DD");
   // let nowtime = now.format("MM-DD HH:mm");
 
   $(".1restTime").css("visibility", "hidden");
@@ -95,20 +145,19 @@ export default function TimeTable() {
   $(".6restTime").css("visibility", "hidden");
   $(".7restTime").css("visibility", "hidden"); // 쉬는시간 UI들 다 안보이게 처리
 
-  let testdate = dayjs(`${nowMonth} 14:13`, `MM-DD HH:mm`);
+  // let testdate = dayjs(`${nowMonth} 14:13`, `MM-DD HH:mm`);
   // let testdate2 = dayjs().format(`MM-DD HH:mm`);
-  let testdate2 = now;
-
-  console.log("testdate test : ", testdate);
-  console.log("type test : ", typeof testdate);
-  console.log("testdate2 test : ", testdate2);
-  console.log("type2 test : ", typeof testdate2);
-  console.log("nowMonth test : ", nowMonth);
+  // let testdate2 = now;
+  // console.log("testdate test : ", testdate);
+  // console.log("type test : ", typeof testdate);
+  // console.log("testdate2 test : ", testdate2);
+  // console.log("type2 test : ", typeof testdate2);
+  // console.log("nowMonth test : ", nowMonth);
   var nowjs = new Date(); // 현재 날짜 및 시간
   var hours = nowjs.getHours();
   var minutes = nowjs.getMinutes(); // 분
   var nowtime = hours + ":" + minutes;
-  console.log("nowtime : ", nowtime);
+  // console.log("nowtime : ", nowtime);
   if (
     // 1교시
     nowtime >= `08 40` &&
