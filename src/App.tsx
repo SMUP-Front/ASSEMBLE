@@ -1,11 +1,18 @@
 import "./App.css";
-import HeadAfter from "./Components/common/Header/After";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import MainRoute from "./Router";
+import LoginPage from "./Components/common/Login/Login";
 import HeadBefore from "./Components/common/Header/Before";
-import Chat from "./Components/pages/Chat";
-import TimeTablePage from "./Components/pages/Schedules/TimeTable";
+import { Head, Main } from "./Components/common/Soom/PostChat/styles";
+import ChatPage from "./Components/pages/Chat";
 
 function App() {
-  return <div id="AppWrapper"></div>;
+  return (
+    <>
+      <MainRoute />
+    </>
+  );
 }
 
 export default App;
